@@ -51,10 +51,8 @@ def start(update: Update, context: CallbackContext) -> None:
     context.job_queue.run_repeating(callback=check_price, interval=300, context=update.message.chat_id, name=str(update.message.chat_id))
 
 def halt(update: Update, context: CallbackContext) -> None:
-    sys.exit(1)
-
-def restart(update: Update, context: CallbackContext) -> None:
-    sys.exit(0)
+    update.message.reply_text("👋 Bye!")
+    os.system("ps aux | grep fdaemon.py | grep -v grep | awk '{print $2}' | xargs kill -SIGABRT")
 
 def main():
     if not os.environ.get('TOKEN') and len(sys.argv) < 2:
@@ -71,9 +69,8 @@ def main():
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("exit", halt))
-    dispatcher.add_handler(CommandHandler("halt", halt))
     dispatcher.add_handler(CommandHandler("quit", halt))
-    dispatcher.add_handler(CommandHandler("restart", restart))
+    dispatcher.add_handler(CommandHandler("restart", halt))
 
     # Start the Bot
     updater.start_polling()
