@@ -4,7 +4,7 @@ TOKEN=$1
 
 ninstance=$(ps aux | grep telegramAlertsBotLauncher.sh | grep -v grep | wc -l)
 
-if [[ $ninstance -ge 2 ]] ; then
+if [[ $ninstance -le 2 ]] ; then
     while (true); do
 		git pull -r origin main
 		./fdaemon.py $TOKEN
