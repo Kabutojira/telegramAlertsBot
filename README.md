@@ -1,4 +1,4 @@
-# $GME price change alert
+# $GME price change alerts on Telegram
 Check every 5 minutes Gamestop price changes and send Telegram alerts
 
 ## How to launch
