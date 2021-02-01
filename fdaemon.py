@@ -23,7 +23,7 @@ def get_changes(ticker,smatimeperiod=5):
     sma = SMA(close_prices.values[:,0], timeperiod=smatimeperiod)
     sma = sma.tolist()
     changes = {}
-    for minutes in [10,20,30,60]:
+    for minutes in [10,15,30,60]:
         if len(sma) > minutes+1:
             changes[str(minutes)] = ((sma[-1] - sma[-(minutes+1)]) / sma[-(minutes+1)] ) * 100
     print(changes)
@@ -33,14 +33,14 @@ def check_price(context):
     job = context.job
     changes = get_changes('GME')
     for time,change in changes.items():
-        if float(change) > 10:
+        if float(change) > 20:
             msg = time + " minutes change is " + str(round(change)) + "%\n"
-            for i in range(0,round(change/10)):
+            for i in range(0,round(change/20)):
                 msg = msg + "🚀"
             context.bot.send_message(job.context, text = msg)
-        if float(change) < -10:
+        if float(change) < -20:
             msg = time + " minutes change is " + str(round(change)) + "%\n"
-            for i in range(0,round(-change/10)):
+            for i in range(0,round(-change/20)):
                 msg = msg + "📉"
             context.bot.send_message(job.context, text = msg)
 
